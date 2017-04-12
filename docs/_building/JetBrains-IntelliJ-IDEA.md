@@ -1,3 +1,7 @@
+---
+layout: default
+level: advanced
+---
 Notes on how to run Find from [JetBrains IntelliJ IDEA](https://www.jetbrains.com/idea/) Ultimate edition.
 
 # IntelliJ 14 Ultimate

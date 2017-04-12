@@ -4,20 +4,27 @@ Find is an end-user search interface for [HPE IDOL](http://www8.hp.com/uk/en/sof
 
 # Guide
 
-## Compiling and Running Find
+## Compiling and Running Find 
 
 ### Basics
-
-- [Building Find](./Building-Find.md) - how to get the code and compile a copy of Find
-- [Running a Development Copy of Find](./Running-a-Development-Copy-of-Find.md) - how to test your changes
-- [Running a Production Copy of Find](./Running-a-Production-Copy-of-Find.md) - how to deploy your changed version of Find
+{% assign basics = site.building | where: "level", "basic" %}
+<ul>
+{% for item in basics %}
+<li>
+<a href="{{ site.baseurl }}{{item.url}}">{{item.title}}</a>
+</li>
+{% endfor %}
+</ul>
 
 ### Advanced
-- [Heroku Deployment Guide](./Heroku-Deployment-Guide.md) - how to run Find on Heroku, if that's something you want to do
-- [Understanding the Code Structure](./Understanding-the-Code-Structure.md) - info about what's going on under the surface
-- [Vagrant](./Vagrant) - how to set up the Find backend virtual machine with Vagrant
-- [JetBrains IntelliJ IDEA](./JetBrains-IntelliJ-IDEA.md) - setting up the IntelliJ IDE to run Find
-- [Documents Duplication](./Documents-Duplication.md) - How to prevent documents with the same references being obscured.
+{% assign advanced = site.building | where: "level", "advanced" %}
+<ul>
+{% for item in advanced %}
+<li>
+<a href="{{ site.baseurl }}{{item.url}}">{{item.title}}</a>
+</li>
+{% endfor %}
+</ul>
 
 ## Configuring Find for IDOL
 
@@ -29,12 +36,14 @@ Find is an end-user search interface for [HPE IDOL](http://www8.hp.com/uk/en/sof
 
 - [Find Java System Properties](./Find-Java-System-Properties.md) - changing some runtime settings
 
-# Modifying Find
-
-- [Changing the logo](./Changing-the-logo.md)
-- [Custom Document Templates](./Custom-Document-Templates.md)
-- [Translating Find](./Translating-Find.md)
-- [Writing Dashboard Widgets](./widgets-dev-docs.md)
+## Modifying Find
+<ul>
+{% for item in site.customisation %}
+<li>
+<a href="{{ site.baseurl }}{{item.url}}">{{item.title}}</a>
+</li>
+{% endfor %}
+</ul>
 
 # What license does it use?
 

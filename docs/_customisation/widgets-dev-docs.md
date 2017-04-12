@@ -1,3 +1,7 @@
+---
+title: Creating Widgets
+layout: default
+---
 # Creating a Widget
 ## Introduction
 ### What are Widgets

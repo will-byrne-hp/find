@@ -1,3 +1,7 @@
+**/*_site/*
+*Gemfile*
+
+
 # Java
 *.class
 *.log

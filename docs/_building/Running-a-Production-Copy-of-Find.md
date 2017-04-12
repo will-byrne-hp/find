@@ -1,3 +1,7 @@
+---
+layout: default
+level: basic
+---
 # Getting Started
 
 So you've made some changes to Find and want to deploy them.  This is the page for you!

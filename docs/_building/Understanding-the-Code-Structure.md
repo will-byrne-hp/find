@@ -1,3 +1,7 @@
+---
+layout: default
+level: advanced
+---
 # Tools
 
 - [Maven](https://maven.apache.org/) is used for Java compilation and constructing the .war files

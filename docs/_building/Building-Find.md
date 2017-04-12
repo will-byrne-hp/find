@@ -1,3 +1,8 @@
+---
+layout: default
+level: basic
+---
+
 Requirements
 ------------
 

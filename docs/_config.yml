@@ -1,1 +1,7 @@
+repository: will-byrne-hp/find
 theme: jekyll-theme-midnight
+collections: 
+  customisation:
+    output: true
+  building:
+    output: true
