@@ -8,32 +8,32 @@ Find is an end-user search interface for [HPE IDOL](http://www8.hp.com/uk/en/sof
 
 ### Basics
 
-- [[Building Find]] - how to get the code and compile a copy of Find
-- [[Running a Development Copy of Find]] - how to test your changes
-- [[Running a Production Copy of Find]] - how to deploy your changed version of Find
+- [Building Find][BuildFind] - how to get the code and compile a copy of Find
+- [Running a Development Copy of Find][RunDevFind] - how to test your changes
+- [Running a Production Copy of Find][RunProdFind] - how to deploy your changed version of Find
 
 ### Advanced
-- [[Heroku Deployment Guide]] - how to run Find on Heroku, if that's something you want to do
-- [[Understanding the Code Structure]] - info about what's going on under the surface
-- [[Vagrant]] - how to set up the Find backend virtual machine with Vagrant
-- [[JetBrains IntelliJ IDEA]] - setting up the IntelliJ IDE to run Find
-- [[Documents Duplication]] - How to prevent documents with the same references being obscured.
+- [Heroku Deployment Guide][HerokuGuide] - how to run Find on Heroku, if that's something you want to do
+- [Understanding the Code Structure][CodeStructure] - info about what's going on under the surface
+- [Vagrant][Vagrant] - how to set up the Find backend virtual machine with Vagrant
+- [JetBrains IntelliJ IDEA][IntelliJ] - setting up the IntelliJ IDE to run Find
+- [Documents Duplication][DocumentsDuplication] - How to prevent documents with the same references being obscured.
 
 ## Configuring Find for IDOL
 
-- [[Find Java System Properties]] - changing some runtime settings
-- [[Configuring Find for IDOL]] - guide to the Find for IDOL config file
-- [[Find User Roles]] - letting people log into Find
+- [Find Java System Properties][SysytemProperties] - changing some runtime settings
+- [Configuring Find for IDOL][ConfigFind] - guide to the Find for IDOL config file
+- [Find User Roles][UserRoles] - letting people log into Find
 
 ## Configuring Find for HavenOnDemand
 
-- [[Find Java System Properties]] - changing some runtime settings
+- [Find Java System Properties][SysytemProperties] - changing some runtime settings
 
 # Modifying Find
 
-- [[Changing the logo]]
-- [[Custom Document Templates]]
-- [[Translating Find]]
+- [Changing the logo][logo]
+- [Custom Document Templates][DocumentTemplates]
+- [Translating Find][i18n]
 
 # What license does it use?
 
@@ -59,3 +59,19 @@ If you want to contribute to Find, please open a pull request and send us some c
 
 # Support
 If you are an HPE IDOL Express or HPE IDOL Premium customer, support for Find is available to you via Customer Support, but only if you are running a version of Find which is distributed on the Big Data Download Center.  **No support is provided for the open source version of Find.**
+
+
+[BuildFind](./Building-Find.md)
+[RunDevFind](./Running-a-Developmont-Copy-of-Find.md)
+[RunProdFind](./Running-a-Production-Copy-of-Find.md)
+[HerokuGuide](./Heroku-Deployment-Guide.md)
+[CodeStructure](/.Understanding-the-Code-Structure.md)
+[Vagrant](./Vagrant)
+[IntelliJ](./JetBrains-IntelliJ-IDEA.md)
+[DocumentsDuplication](,/Documents-Duplication.md)
+[SystemProperties](./Documents-Duplication.md)
+[ConfigFind](./Configuring-Find-for-IDOL.md)
+[UserRoles](./Find-User-Roles.md)
+[logo](./Changing-the-logo.md)
+[DocumentTemplates](./Custom-Document-Templates.md)
+[i18n](./Translating-Find.md)
