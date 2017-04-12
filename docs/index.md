@@ -62,7 +62,7 @@ If you are an HPE IDOL Express or HPE IDOL Premium customer, support for Find is
 
 
 
-[RunDevFind]:(./Running-a-Developmont-Copy-of-Find.md)
+[RunDevFind](./Running-a-Developmont-Copy-of-Find.md)
 [RunProdFind]:(./Running-a-Production-Copy-of-Find.md)
 [HerokuGuide]:(./Heroku-Deployment-Guide.md)
 [CodeStructure]:(/.Understanding-the-Code-Structure.md)
