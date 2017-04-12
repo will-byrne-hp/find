@@ -9,12 +9,12 @@ Find is an end-user search interface for [HPE IDOL](http://www8.hp.com/uk/en/sof
 ### Basics
 
 - [Building Find](./Building-Find.md) - how to get the code and compile a copy of Find
-- [Running a Development Copy of Find](./Running-a-Developmont-Copy-of-Find.md) - how to test your changes
+- [Running a Development Copy of Find](./Running-a-Development-Copy-of-Find.md) - how to test your changes
 - [Running a Production Copy of Find](./Running-a-Production-Copy-of-Find.md) - how to deploy your changed version of Find
 
 ### Advanced
 - [Heroku Deployment Guide](./Heroku-Deployment-Guide.md) - how to run Find on Heroku, if that's something you want to do
-- [Understanding the Code Structure](/.Understanding-the-Code-Structure.md) - info about what's going on under the surface
+- [Understanding the Code Structure](./Understanding-the-Code-Structure.md) - info about what's going on under the surface
 - [Vagrant](./Vagrant) - how to set up the Find backend virtual machine with Vagrant
 - [JetBrains IntelliJ IDEA](./JetBrains-IntelliJ-IDEA.md) - setting up the IntelliJ IDE to run Find
 - [Documents Duplication](./Documents-Duplication.md) - How to prevent documents with the same references being obscured.
