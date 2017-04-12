@@ -1,4 +1,3 @@
-<link rel="shortcut icon" type="image/png" href="./favicon.png">
 # What is Find?
 
 Find is an end-user search interface for [HPE IDOL](http://www8.hp.com/uk/en/software-solutions/information-data-analytics-idol/index.html) and [Haven OnDemand](https://www.havenondemand.com)
