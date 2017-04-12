@@ -8,7 +8,7 @@ Find is an end-user search interface for [HPE IDOL](http://www8.hp.com/uk/en/sof
 
 ### Basics
 
-- [Building Find][BuildFind] - how to get the code and compile a copy of Find
+- [Building Find]:(./Building-Find.md) - how to get the code and compile a copy of Find
 - [Running a Development Copy of Find][RunDevFind] - how to test your changes
 - [Running a Production Copy of Find][RunProdFind] - how to deploy your changed version of Find
 
@@ -61,7 +61,7 @@ If you want to contribute to Find, please open a pull request and send us some c
 If you are an HPE IDOL Express or HPE IDOL Premium customer, support for Find is available to you via Customer Support, but only if you are running a version of Find which is distributed on the Big Data Download Center.  **No support is provided for the open source version of Find.**
 
 
-[BuildFind]:(./Building-Find.md)
+
 [RunDevFind]:(./Running-a-Developmont-Copy-of-Find.md)
 [RunProdFind]:(./Running-a-Production-Copy-of-Find.md)
 [HerokuGuide]:(./Heroku-Deployment-Guide.md)
