@@ -34,6 +34,7 @@ Find is an end-user search interface for [HPE IDOL](http://www8.hp.com/uk/en/sof
 - [Changing the logo](./Changing-the-logo.md)
 - [Custom Document Templates](./Custom-Document-Templates.md)
 - [Translating Find](./Translating-Find.md)
+- [Writing Dashboard Widgets](./widgets-dev-docs.md)
 
 # What license does it use?
 

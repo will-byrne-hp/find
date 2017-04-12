@@ -21,7 +21,7 @@ Here we have the Topic Map Widget. This is one of the standard built in widgets 
 
 The Current Time and Date widget is a standard widget (explained [here][sw]). This is not backed by any data from the server other than the widget specific settings and will not update periodically. Like the Topic Map above it will resize itself when the window size changes and can be set to a rectangle of any size / orientation.
 
-### Results List Widget
+#### Results List Widget
 ![Results List Widget][results-list]
 
 This is the Results List Widget, it is backed by a saved search and will display the top n results as specified in the configuration file. The results list widget will resize itself when the window fires resize events and will alter its layout when necessary to accommodate the data and the specified view layout. The widget will also refresh the data when the interval has passed so if the saved search has changed then the changes will be reflected in the widget.
@@ -30,7 +30,7 @@ This is the Results List Widget, it is backed by a saved search and will display
 There are three types of widget currently supported in Find: [Standard][sw], [Updating][uw] and [SavedSearch][ssw] widgets. These three widget types should cover most use cases and can all be implemented quickly by extending their abstract views.
 
 ### Standard Widget
-A standard widget is designed to be largely static. This is not to say that the widget itself can not change (see the [Current Time and Date Widget][ctdw] above) but that it will not be requesting more data from a server or re-rendering the display other than to handle resizing. For example: a widget to display a company wide video update.
+A standard widget is designed to be largely static. This is not to say that the widget itself can not change (see the [Current Time and Date Widget][ctdw] above) but that it will not be requesting more data from a server or re-rendering the display other than to handle resizing. For example: a widget to display a company-wide video update.
 > **Note:** If the widget is just a static piece of HTML or an image then the static content or static image widgets should be used and the HTML / image URI passed in via widget settings.
 
 ### Updating Widget
@@ -58,7 +58,7 @@ SunburstWidget: {
 The key for the object property (`SunburstWidget`) is the name used in the configuration file to refer to this widget. The constructor property should be the Backbone View constructor for the widget view. Widgets should be written in a separate file and loaded via [Require.js][requirejs] into the regitstry.
 
 #### HTML and Layout
-The layout of the widgets is very simple. Each widget has a title (optional) and a content div, these use `display: flex` flex so if there is no title then the content will expand to take up 100% of the height. For the purposes of widget development the only element of consequence is the widget content div, this is passed to view from the abstract widget view as `$content` and is available after calling the render method on the widget abstract view. For example:
+The layout of the widgets is very simple. Each widget has a title (optional) and a content div, these use `display: flex` so if there is no title then the content will expand to take up 100% of the height. For the purposes of widget development the only element of consequence is the widget content div, this is passed to view from the abstract widget view as `$content` and is available after calling the render method on the widget abstract view. For example:
 ```javascript
 Widget.prototype.render.apply(this);
 this.$content.html(someHtml);
@@ -74,7 +74,7 @@ The widgets are sized and laid out in a grid pattern (as explained in the admin 
 We provide an `onResize` function to handle window resize events which should be used rather than implementing separate listeners as this also handles the sidebar opening and collapsing as well.
 
 The `onClick` method is provided to handle click functionality and will be called if the widget is clicked anywhere. This will only be called if the `clickable` property is set to `true`.
-> **Note:** This should not be overridden by a saved search.
+> **Note:** This should not be overridden by a saved search widget as that already has a click handler function.
 
 #### Widget Settings
 In the configuration file there is a `widgetSettings` object that will look something like this: 
@@ -171,12 +171,12 @@ define([
 ```
 
 ### Saved Search Widget Development
-The saved search widgets are an extension of the updating widgets so incorporate all of the above apart from `doUpdate` which should not be overridden. The saved search is handled with promises and the abstract view handles the retrieval of the saved search during initialisation and updates.
+The saved search widgets are an extension of the updating widgets so incorporate all of the above apart from `doUpdate` which should not be overridden as the saved search widget already handles this for you (see `getData` below). The saved search abstract view handles the retrieval of the saved search during initialisation and updates.
 
 #### Functions
 `postInitialize` is a function that is run after the saved search has been fetched successfully. This can optionally return a promise in which case `getData` will not be called until is has been resolved. This is useful for loading any extra objects or views that are contingent on the information in the saved search.
 
-`getData` is the main method for retrieving the data needed to render the view. In the [Results List Widget][rlw] this is used to fetch the document collection, there is a listener on the collection which renders the new results and calculates what can be displayed. This should return a promise which will be used to handle the `doUpdate` callback.
+`getData` is the main method for retrieving the data needed to render the view, it is called in by `doUpdate` in the abstract widget (which is why this should not be overridden). In the [Results List Widget][rlw] this is used to fetch the document collection, there is a listener on the collection which renders the new results and calculates what can be displayed. This should return a promise which will be used to handle the `doUpdate` callback.
 
 #### Properties
 `savedSearchModel` is the model that controls the saved search information. This is controlled by the abstract view and should be considered read only.
