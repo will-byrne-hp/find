@@ -8,7 +8,7 @@ Find is an end-user search interface for [HPE IDOL](http://www8.hp.com/uk/en/sof
 
 ### Basics
 
-- [Building Find]:(./Building-Find.md) - how to get the code and compile a copy of Find
+- [Building Find](./Building-Find.md) - how to get the code and compile a copy of Find
 - [Running a Development Copy of Find][RunDevFind] - how to test your changes
 - [Running a Production Copy of Find][RunProdFind] - how to deploy your changed version of Find
 
