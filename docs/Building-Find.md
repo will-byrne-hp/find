@@ -3,7 +3,7 @@ Requirements
 
 Building Find requires the following to be installed:
 
-* [Git](https://git-scm.com/) | [Alternative for Windows only](https://git-for-windows.github.io/)
+* [Git](https://git-scm.com/) [Alternative for Windows only](https://git-for-windows.github.io/)
 * [Apache Maven 3](http://maven.apache.org) (Hint: make sure the `mvn` executable is in your `PATH` environment variable)
 * [NodeJS](http://nodejs.org)
 * [Java 8 JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
