@@ -3,54 +3,73 @@ title: Creating Widgets
 layout: default
 ---
 # Creating a Widget
+
 ## Introduction
+
 ### What are Widgets
-Simply put, Widgets are the components that make up a dashboard. A widget is a configurable JavaScript module that is rendered on the dashboard grid as a [Backbone][backbone] View. Widgets can be configured using the `dashboards.json` configuration file and can take a custom settings object.
+
+Simply put, widgets are configurable components that make up a Dashboard. Widgets come in a variety of types; each type is designed to display different type of content to user, and keep it up-to-date if the content changes over time, provided that the dashboard has a configured update interval. A widget is a configurable JavaScript module that is rendered on the dashboard grid as a [Backbone][backbone] View. Widgets can be configured using the `dashboards.json` configuration file and can take a custom settings object.
+> **Note:** For more information on the configuration file, please see the Find Admin Guide.
 
 ### Assumptions and Constraints
-- A widget must be responsive. The grid system we have implemented means that a widget can be any rectangular shape so it must be able to handle being short, tall, thin and wide without breaking the UI.
+
+- A widget must be responsive. The grid system we have implemented means that a widget can be configured to occupy a rectangle of any size or proportion; it must accommodate reasonable configurations without breaking the UI.
 - The widget should not take a long time to load. Given this is a dashboard system it needs to be be responsive and load in a timely manner.
 - The widgets should all run as separate instances and not interfere with other widgets.
 - A widget is non interactive. Widgets should only display information and if the `onClick` function is used it should navigate to the source of the data used to render the display.
+- If a dashboard has a configured update interval, all updateable widgets will be periodically refreshed, e.g. fetch fresh data and update their displays accordingly. Such widgets must detect changes to their data and have ways to re-render the requisite parts of their display that do not rely on the page being refreshed.
 
 ### Widget Examples
 
-#### Topic Map
+#### Topic Map Widget
+
 ![Topic Map Widget][topic-map]
 
-Here we have the Topic Map Widget. This is one of the standard built in widgets which is backed by a saved search (explained [here][ssw]). In a running instance of Find, this widget will automatically resize when the window is resized and it will update the saved search and Topic Map after a specified interval. There can be multiple of these on a single dashboard without them conflicting with each other. 
+Here we have the Topic Map Widget. This is one of the standard built in widgets which is backed by a saved search (explained [here][SavedSearchWidget]). In a running instance of Find, this widget will automatically resize when the window size changes and it will update the saved search and Topic Map after a specified interval. There can be multiple of these on a single dashboard without them conflicting with each other. 
 
-#### Current Time and Date
+#### Current Time and Date Widget
+
 ![Current Time and Date][time-and-date]
 
-The Current Time and Date widget is a standard widget (explained [here][sw]). This is not backed by any data from the server other than the widget specific settings and will not update periodically. Like the Topic Map above it will resize itself when the window size changes and can be set to a rectangle of any size / orientation.
+The Current Time and Date Widget is an example of a standard widget (explained [here][StandardWidget]). This is not backed by any data from the server other than the widget specific settings and will not update periodically. 
 
 #### Results List Widget
+
 ![Results List Widget][results-list]
 
-This is the Results List Widget, it is backed by a saved search and will display the top n results as specified in the configuration file. The results list widget will resize itself when the window fires resize events and will alter its layout when necessary to accommodate the data and the specified view layout. The widget will also refresh the data when the interval has passed so if the saved search has changed then the changes will be reflected in the widget.
+Like the [Topic Map Widget][TopicMapWidget] the Results List Widget is backed by a saved search and will display the top `n` results as specified in the configuration file. The Results List Widget will alter its layout to accommodate it's shape and size. If the configured widget size is too small to display all the requested results, excess entries will be hidden.
 
 ## Widget Types
-There are three types of widget currently supported in Find: [Standard][sw], [Updating][uw] and [SavedSearch][ssw] widgets. These three widget types should cover most use cases and can all be implemented quickly by extending their abstract views.
+
+There are three types of widget currently supported in Find: 
+- [Standard Widget][StandardWidget]
+- [Updating Widget][UpdatingWidget] 
+- [SavedSearch Widget][SavedSearchWidget]
+
+These three widget types should cover most use cases and can all be implemented quickly by extending their abstract views found in [the widgets folder][WidgetsFolder]
 
 ### Standard Widget
-A standard widget is designed to be largely static. This is not to say that the widget itself can not change (see the [Current Time and Date Widget][ctdw] above) but that it will not be requesting more data from a server or re-rendering the display other than to handle resizing. For example: a widget to display a company-wide video update.
-> **Note:** If the widget is just a static piece of HTML or an image then the static content or static image widgets should be used and the HTML / image URI passed in via widget settings.
+
+A standard widget is designed to be largely static. This is not to say that the widget itself can not change (see the [Current Time and Date Widget][CurrentDateTimeWidget]), but that it will not be updated by the Dashboard once it's update interval passes. It will be rendered once, and is in sole control of any changes that happen to it thereafter. For example: a widget to display a company-wide promotional video.
+> **Note:** If the widget is just a static piece of HTML or an image, then the built in Static Content Widget or Static Image Widget should be used, respectively.Refer to the Admin Guide for configuration details.
 
 ### Updating Widget
-An Updating Widget is the same as a [Standard Widget][sw] but will update itself every n seconds which is defined in the configuration file. The update triggers a function call which needs to be overridden in the implementation of the abstract view. This type of widget should be used when there is a need to fetch data or re-render on a regular interval. For example a widget to display the weather may poll the api of a third party weather service. 
+An Updating Widget is the same as a [Standard Widget][StandardWidget] but will update itself every `n` seconds as defined in the `dashboards.json` configuration file. The update calls the widget's `doUpdate()` function which must be implemented. This type of widget should be used when there is a need to fetch data or re-render on a regular interval. For example a widget to display the weather may poll the api of a third party weather service. 
 
-> **Note:** The [Saved Search Widget][ssw] extends the Updating Widget abstract view and will call update in the same manner.
+> **Note:** The [Saved Search Widgets][SavedSearchWidget] extends the Updating Widget abstract view and implements its own flavour of `doUpdate()` designed to fetch data from saved searches.
 
 ### Saved Search Widget
 
-The Saved Search Widget is an extension of the [Updating Widget][uw] that is backed by a saved search. As seen in the [Results List Widget][rlw] above this will call the update method after the interval has passed and will re-fetch the saved search data which can then be used to retrieve the search results needed by the widget to update the display (in the case of the [Results List Widget][rlw], it will be the documents collection).
+The Saved Search Widget is an extension of the [Updating Widget][UpdatingWidget] that is backed by a saved search. It will re-fetch the saved search data, which can then be used to retrieve any additional information needed by the widget to update its display. For example, the [Results List Widget][ResultsListWidget] relies on fetching the Document Collection, and the Sunburst Widget requires Dependent Parametric Values.
 
-> **Note:** The saved search can be either a query or a snapshot and as snapshots do not change it will not update if a snapshot is specified.
+> **Note:** The saved search can be either a Query or a Snapshot. As snapshots do not change after creation, a widget backed by a Snapshot will never update.
 
 ## Development
+
 ### Shared Development
+
 #### Widget Registry
+
 All widgets are located and instantiated via the widget registry (`widget-registry.js`). This is where the widget source files are loaded via [Require.js][requirejs]. When a widget is loaded by the dashboard it uses the name specified in the configuration file to perform a lookup in the widget registry to retrieve the constructor.
 
 A widget registry entry looks like this:
@@ -59,29 +78,33 @@ SunburstWidget: {
     Constructor: SunburstWidget
 }
 ```
-The key for the object property (`SunburstWidget`) is the name used in the configuration file to refer to this widget. The constructor property should be the Backbone View constructor for the widget view. Widgets should be written in a separate file and loaded via [Require.js][requirejs] into the regitstry.
+The key for the object property (`SunburstWidget`) is the name used in the configuration file to refer to this widget. The constructor property should be the Backbone View constructor for the widget view. Widgets should be written in a separate file and loaded via [Require.js][requirejs] into the registry.
 
 #### HTML and Layout
-The layout of the widgets is very simple. Each widget has a title (optional) and a content div, these use `display: flex` so if there is no title then the content will expand to take up 100% of the height. For the purposes of widget development the only element of consequence is the widget content div, this is passed to view from the abstract widget view as `$content` and is available after calling the render method on the widget abstract view. For example:
+
+The layout of the widgets is very simple. Each widget has a title (optional) and a content `div`, these use `display: flex` so if there is no title then the content will expand to take up 100% of the height. For the purposes of widget development the only element of consequence is the widget content div, this is passed to view from the abstract widget view as `$content` and is available after calling the render method on the widget abstract view. For example:
 ```javascript
-Widget.prototype.render.apply(this);
+<AbstractView>.prototype.render.apply(this); // <AbstractView> can be Widget, UpdatingWidget, or SavedSearchWidget. It must be imported via Require.js.
 this.$content.html(someHtml);
 ```
 
-All widget types come with a loading spinner which is displayed until the `initialised()` function is called. This will hide the loading spinner and show the content, ideally this should be called at the end of the render method just after the `$content` element is populated.
+All widget types come with a loading spinner which is displayed until the `initialised()` function is called. This will hide the loading spinner and show the content. The `initialised()` function should be called at the end of the render method just after the `$content` element is populated.
 
-The widgets are sized and laid out in a grid pattern (as explained in the admin guide) the size of which is specified on the dashboard. The widget size is then calculated based upon its starting coordinates and width and height in grid squares and added as an inline style. This necessitates that the widget must be capable of handling multiple alternate layouts, for example the [Results List Widget][rlw] will switch to a column based layout when it would allow for more data to be displayed.
+The widgets are sized and laid out in a grid pattern (as explained in the Admin Guide) the size of which is specified on a per dashboard basis. This is handled by the infrastructure of the dashboard page. Because of this, the widget must be capable of handling multiple alternate layouts: for example the [Results List Widget][ResultsListWidget] will switch to a column-based layout when it would allow for more data to be displayed then a row-based layout.
 
 #### Functions and Properties
+
 `clickable` is the only property used by all widget types. It takes a `boolean` value and determines whether the widget click handler is called when the user clicks the widget. As mentioned above the widget should be non interactive and the click handler should only be used to navigate to the data source of the widget
 
 We provide an `onResize` function to handle window resize events which should be used rather than implementing separate listeners as this also handles the sidebar opening and collapsing as well.
 
 The `onClick` method is provided to handle click functionality and will be called if the widget is clicked anywhere. This will only be called if the `clickable` property is set to `true`.
-> **Note:** This should not be overridden by a saved search widget as that already has a click handler function.
+> **Note:** This should not be overridden by a Saved Search Widget as that already has a click handler function.
 
 #### Widget Settings
-In the configuration file there is a `widgetSettings` object that will look something like this: 
+
+In the configuration file each widget can have a `widgetSettings` object that will look something like this: 
+
 ```json
 "widgetSettings": {
     "key": "some value",
@@ -91,7 +114,8 @@ In the configuration file there is a `widgetSettings` object that will look some
     }
 }
 ```
-These values are passed in to the widget when it is initialised in the options parameter and stored as a variable on the view. For example the above would be accessed via:
+These values are passed in to the widget when it is initialised, and stored as a variable on the view. For example the above would be accessed via:
+
 ```javascript
 initialize: function(options) {
     Widget.prototype.initialize.apply(this, arguments);
@@ -103,8 +127,11 @@ initialize: function(options) {
 ```
 
 ### Standard Widget Development
-The standard widgets are very simple and utilise nothing additional to the above shared settings when implemented. As mentioned above most uses of this type of widget could be replaced with a `StaticContentWidget` or `StaticImageWidget`.
+
+The standard widgets are very simple and utilise nothing additional to the above shared settings when implemented. Most uses of this type of widget could be replaced with a `StaticContentWidget` or `StaticImageWidget`.
+
 #### Example
+
 ```javascript
 define([
     './widget' // load the abstract widget view.
@@ -120,7 +147,7 @@ define([
 
         render: function() {
             Widget.prototype.render.apply(this);
-            this.$content.html('Hello, ' + this.subject + '!'); // render some html greeting.
+            this.$content.html('Hello, ' + this.subject + '!'); // render html greeting.
             this.initialised(); // remove the loading spinner.
         }
     });
@@ -128,14 +155,17 @@ define([
 ```
 
 ### Updating Widget Development
-The updating widget utilises a set of functions to handle the update. These need to be implemented carefully to ensure it works with the `TimeLastRefreshedWidget`.
+
+The updating widget utilises a set of functions to handle the update. These functions need to be implemented carefully to ensure that the widget works with the `TimeLastRefreshedWidget` (this is a widget which tracks the dashboard update cycle and displays this information to the user).
 
 #### Functions
-`doUpdate(done)` is the main update function that is called when the dashboard refreshes all of the widgets. The done parameter is a callback that must be called when the widget has finished updating (if this is not called the `TimeLastRefreshed` widget will not know the update has finished). This function should re-fetch any data needed to render the widget and then update the UI accordingly. The loading spinner is handled by the abstract view and does not need to be shown and hidden manually.
+
+`doUpdate(done)` is the main update function that is called when the dashboard refreshes all of the widgets. The `done` parameter is a callback that must be called when the widget has finished updating (if this is not called the `TimeLastRefreshed` widget will not know the update has finished and the loading spinner will not be hidden). This function should re-fetch any data needed to render the widget and then update the UI accordingly. The loading spinner is handled by the abstract view and does not need to be shown and hidden manually.
 
 `onCancelled` is called when the update has been cancelled for any reason. This function should cancel any pending requests made by the widget and resolve or remove any outstanding promises.
 
 #### Example
+
 ```javascript
 define([
     './updating-widget', // load the abstract updating-widget view.
@@ -147,7 +177,7 @@ define([
         initialize: function(options) {
             UpdatingWidget.prototype.initialize.apply(this, arguments);
             this.weatherService = new SomeWeatherService({location: this.widgetSettings.location}); // create some weather service with a location from the settings.
-            this.subject = this.widgetSettings.subject || 'world'; // setting to determine who to greet.
+            this.subject = this.widgetSettings.subject || 'world'; // setting to determine whom to greet.
         },
 
         render: function() {
@@ -175,14 +205,17 @@ define([
 ```
 
 ### Saved Search Widget Development
-The saved search widgets are an extension of the updating widgets so incorporate all of the above apart from `doUpdate` which should not be overridden as the saved search widget already handles this for you (see `getData` below). The saved search abstract view handles the retrieval of the saved search during initialisation and updates.
+
+The saved search widgets are an extension of the [Updating Widget][UpdatingWidget] they have their own version of the `doUpdate` and `onCancelled` methods, which must not be overridden unless the prototype function is called as well. The abstract view handles the retrieval of the saved search during initialisation and updates.
 
 #### Functions
-`postInitialize` is a function that is run after the saved search has been fetched successfully. This can optionally return a promise in which case `getData` will not be called until is has been resolved. This is useful for loading any extra objects or views that are contingent on the information in the saved search.
 
-`getData` is the main method for retrieving the data needed to render the view, it is called in by `doUpdate` in the abstract widget (which is why this should not be overridden). In the [Results List Widget][rlw] this is used to fetch the document collection, there is a listener on the collection which renders the new results and calculates what can be displayed. This should return a promise which will be used to handle the `doUpdate` callback.
+`postInitialize` is a function that is run after the saved search has been fetched successfully on initialisation. This can optionally return a promise in which case `getData` will not be called until is has been resolved. This is useful for loading any extra objects or views that are contingent on the information in the saved search. Barring connection errors, this function will only be called once during the life of the widget, therefore it should not be used to fetch information that need to be refreshed periodically.
+
+`getData` is the main method for retrieving the data needed to render the view. It must return a promise, which will be used to handle the `doUpdate` callback. This function will be called on every update cycle. For example, in the [Results List Widget][ResultsListWidget] this function is used to fetch the Document Collection. The widget creates a listener on the collection which renders the new results and calculates what can be displayed.
 
 #### Properties
+
 `savedSearchModel` is the model that controls the saved search information. This is controlled by the abstract view and should be considered read only.
 
 `queryModel` is available if this is required. This contains the same information as the saved search model in a different format and is mainly used for internal purposes.
@@ -200,7 +233,7 @@ define([
     'use strict';
 
     return SavedSearchWidget.extend({
-        viewType: 'list', // when clicket take user to the saved search with the list view displayed.
+        viewType: 'list', // when clicked take user to the saved search with the list view displayed.
 
         template: _.template('<span>Latest result is: <%-title%> <br> it was indexed on: <%-date%></span>'), // template for the document.
 
@@ -219,7 +252,7 @@ define([
         },
 
         getData: function() {
-            return this.documentsCollection.fetch({ // fetch the document based on the saved search
+            return this.documentsCollection.fetch({ // fetch the document collection based on the saved search
                 data: {
                     text: this.queryModel.get('queryText'),
                     max_results: 1,
@@ -244,8 +277,12 @@ define([
 [topic-map]: ./topic-map.png
 [time-and-date]: ./time-and-date.png
 [results-list]: ./results-list.png
-[ctdw]:#current-time-and-date
-[rlw]:#results-list-widget
-[sw]:#standard-widget
-[uw]:#updating-widget
-[ssw]:#saved-search-widget
+[CurrentDateTimeWidget]:#current-time-and-date
+[ResultsListWidget]:#results-list-widget
+[StandardWidget]:#standard-widget
+[UpdatingWidget]:#updating-widget
+[SavedSearchWidget]:#saved-search-widget
+[TopicMapWidget]:#topic-map-widget
+[WidgetsFolder]:(/webapp/idol/src/main/public/static/js/find/idol/app/page/dashboard/widgets/)
+[SavedSearchModel]:(/webapp/core/src/main/public/static/js/find/app/model/saved-searches/saved-search-model.js)
+[DashboardPage]:(/webapp/idol/src/main/public/static/js/find/idol/app/page/dashboard-page.js)
