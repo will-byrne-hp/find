@@ -283,6 +283,6 @@ define([
 [UpdatingWidget]:#updating-widget
 [SavedSearchWidget]:#saved-search-widget
 [TopicMapWidget]:#topic-map-widget
-[WidgetsFolder]:(/webapp/idol/src/main/public/static/js/find/idol/app/page/dashboard/widgets/)
+[WidgetsFolder]:(../../webapp/idol/src/main/public/static/js/find/idol/app/page/dashboard/widgets/)
 [SavedSearchModel]:(/webapp/core/src/main/public/static/js/find/app/model/saved-searches/saved-search-model.js)
 [DashboardPage]:(/webapp/idol/src/main/public/static/js/find/idol/app/page/dashboard-page.js)
