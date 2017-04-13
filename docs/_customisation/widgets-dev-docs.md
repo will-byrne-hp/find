@@ -46,7 +46,8 @@ There are three types of widget currently supported in Find:
 - [Updating Widget][UpdatingWidget] 
 - [SavedSearch Widget][SavedSearchWidget]
 
-These three widget types should cover most use cases and can all be implemented quickly by extending their abstract views found in [the widgets folder][WidgetsFolder]
+These three widget types should cover most use cases and can all be implemented quickly by extending their abstract views found in the widgets folder: 
+`find/webapp/idol/src/main/public/static/js/find/idol/app/page/dashboard/widgets/`
 
 ### Standard Widget
 
@@ -283,6 +284,3 @@ define([
 [UpdatingWidget]:#updating-widget
 [SavedSearchWidget]:#saved-search-widget
 [TopicMapWidget]:#topic-map-widget
-[WidgetsFolder]:(../../webapp/idol/src/main/public/static/js/find/idol/app/page/dashboard/widgets/)
-[SavedSearchModel]:(/webapp/core/src/main/public/static/js/find/app/model/saved-searches/saved-search-model.js)
-[DashboardPage]:(/webapp/idol/src/main/public/static/js/find/idol/app/page/dashboard-page.js)
